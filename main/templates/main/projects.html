@@ -31,7 +31,8 @@
                         {% if project.live_demo_url %}
                         <a href="{{ project.live_demo_url }}" target="_blank" class="text-blue-600 hover:text-blue-800 text-sm">Live Demo</a>
                         {% endif %}
-                        <a href="{% url 'project-detail' project.id %}" class="text-blue-600 hover:text-blue-800 text-sm">Details</a>
+                        <a href="{% url 'project_detail' project.id %}" class="text-blue-600 hover:text-blue-800 text-sm">Details</a>
+
                     </div>
                 </div>
             </div>
