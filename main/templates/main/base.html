@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Damaris Chege - Backend Developer & AWS Solutions Architect{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- You can add custom styles or Google Fonts here -->
+    <style>
+        .skill-progress {
+            transition: width 1s ease-in-out;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <a href="{% url 'home' %}" class="text-xl font-bold text-blue-600">Damaris Chege</a>
+                
+                <div class="hidden md:flex space-x-8">
+                    <a href="{% url 'home' %}" class="hover:text-blue-600 transition-colors">Home</a>
+                    <a href="{% url 'about' %}" class="hover:text-blue-600 transition-colors">About</a>
+                    <a href="{% url 'projects' %}" class="hover:text-blue-600 transition-colors">Projects</a>
+                    <a href="{% url 'contact' %}" class="hover:text-blue-600 transition-colors">Contact</a>
+                    <a href="{% url 'certifications' %}" class="hover:text-blue-600 transition-colors">Certifications</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-20"> <!-- Add padding to account for fixed nav -->
+        {% block content %}
+        <!-- Content will be injected here from child templates -->
+        {% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12 mt-16">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p>&copy; 2025 Damaris Chege. Built with Django & Django REST Framework.</p>
+            <div class="flex justify-center space-x-6 mt-4">
+                {% if about_me.github_url %}
+                <a href="{{ about_me.github_url }}" target="_blank" class="hover:text-blue-400 transition-colors">GitHub</a>
+                {% endif %}
+                {% if about_me.linkedin_url %}
+                <a href="{{ about_me.linkedin_url }}" target="_blank" class="hover:text-blue-400 transition-colors">LinkedIn</a>
+                {% endif %}
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for interactive elements -->
+    <script>
+        // Simple script to animate skill bars when they come into view
+        document.addEventListener('DOMContentLoaded', function() {
+            const skillBars = document.querySelectorAll('.skill-progress');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const width = entry.target.getAttribute('data-width');
+                        entry.target.style.width = width + '%';
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            skillBars.forEach(bar => observer.observe(bar));
+        });
+    </script>
+</body>
+</html>

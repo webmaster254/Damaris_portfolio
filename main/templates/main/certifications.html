@@ -1,0 +1,56 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Certifications - Damaris Chege{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-12">
+    <h1 class="text-4xl font-bold text-center mb-12">My Certifications</h1>
+    
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for certification in certifications %}
+        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+            {% if certification.image %}
+            <img src="{{ certification.image.url }}" alt="{{ certification.name }}" class="w-full h-48 object-cover">
+            {% endif %}
+            
+            <div class="p-6">
+                <h3 class="text-xl font-semibold mb-2">{{ certification.name }}</h3>
+                <p class="text-gray-600 mb-2">Issued by: {{ certification.issuer }}</p>
+                <p class="text-sm text-gray-500 mb-2">
+                    Issued: {{ certification.issue_date|date:"F Y" }}
+                    {% if certification.expiration_date %}
+                    <br>Expires: {{ certification.expiration_date|date:"F Y" }}
+                    {% endif %}
+                </p>
+                
+                <span class="inline-block px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full mb-4">
+                    {{ certification.get_category_display }}
+                </span>
+                
+                {% if certification.credential_id %}
+                <p class="text-sm text-gray-600 mb-4">Credential ID: {{ certification.credential_id }}</p>
+                {% endif %}
+                
+                <div class="flex space-x-3">
+                    {% if certification.credential_url %}
+                    <a href="{{ certification.credential_url }}" target="_blank" 
+                       class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors text-sm">
+                        Verify Credential
+                    </a>
+                    {% endif %}
+                    
+                    <a href="{% url 'certification_detail' certification.pk %}" 
+                       class="border border-blue-600 text-blue-600 px-4 py-2 rounded hover:bg-blue-50 transition-colors text-sm">
+                        View Details
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-span-3 text-center py-12">
+            <p class="text-gray-500 text-lg">No certifications available yet.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

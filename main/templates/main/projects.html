@@ -1,0 +1,46 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<section class="py-16">
+    <div class="max-w-6xl mx-auto px-4">
+        <h1 class="text-4xl font-bold text-center mb-12">My Projects</h1>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for project in projects %}
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                {% if project.architecture_diagram %}
+                <img src="{{ project.architecture_diagram.url }}" alt="{{ project.title }}" class="w-full h-48 object-cover">
+                {% endif %}
+                <div class="p-6">
+                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full mb-2 inline-block">
+                        {{ project.project_type }}
+                    </span>
+                    <h3 class="text-xl font-semibold mb-2">{{ project.title }}</h3>
+                    <p class="text-gray-600 mb-4">{{ project.description|truncatewords:25 }}</p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        {% for skill in project.technologies_used.all|slice:":4" %}
+                        <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">{{ skill.name }}</span>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="flex space-x-3">
+                        {% if project.github_url %}
+                        <a href="{{ project.github_url }}" target="_blank" class="text-blue-600 hover:text-blue-800 text-sm">GitHub</a>
+                        {% endif %}
+                        {% if project.live_demo_url %}
+                        <a href="{{ project.live_demo_url }}" target="_blank" class="text-blue-600 hover:text-blue-800 text-sm">Live Demo</a>
+                        {% endif %}
+                        <a href="{% url 'project-detail' project.id %}" class="text-blue-600 hover:text-blue-800 text-sm">Details</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-span-full text-center text-gray-500 py-12">
+                <p class="text-lg">No projects available yet. Check back soon!</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

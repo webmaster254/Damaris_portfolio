@@ -1,0 +1,77 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<section class="py-16">
+    <div class="max-w-4xl mx-auto px-4">
+        {% if about_me %}
+        <div class="text-center mb-12">
+            {% if about_me.photo %}
+            <img src="{{ about_me.photo.url }}" alt="{{ about_me.full_name }}" class="w-48 h-48 rounded-full mx-auto mb-6 object-cover border-4 border-blue-100">
+            {% endif %}
+            <h1 class="text-4xl font-bold mb-4">{{ about_me.full_name }}</h1>
+            <h2 class="text-xl text-gray-600 mb-6">{{ about_me.title }}</h2>
+            <p class="text-lg text-gray-700">{{ about_me.bio_md|linebreaks }}</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 mb-12">
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+                <h3 class="text-xl font-semibold mb-4">Contact Information</h3>
+                <div class="space-y-2">
+                    {% if about_me.email_public %}
+                    <p><strong>Email:</strong> {{ about_me.email_public }}</p>
+                    {% endif %}
+                    {% if about_me.phone_public %}
+                    <p><strong>Phone:</strong> {{ about_me.phone_public }}</p>
+                    {% endif %}
+                    {% if about_me.location %}
+                    <p><strong>Location:</strong> {{ about_me.location }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+                <h3 class="text-xl font-semibold mb-4">Links</h3>
+                <div class="space-y-2">
+                    {% if about_me.github_url %}
+                    <p><a href="{{ about_me.github_url }}" target="_blank" class="text-blue-600 hover:text-blue-800">GitHub</a></p>
+                    {% endif %}
+                    {% if about_me.linkedin_url %}
+                    <p><a href="{{ about_me.linkedin_url }}" target="_blank" class="text-blue-600 hover:text-blue-800">LinkedIn</a></p>
+                    {% endif %}
+                    {% if about_me.twitter_url %}
+                    <p><a href="{{ about_me.twitter_url }}" target="_blank" class="text-blue-600 hover:text-blue-800">Twitter</a></p>
+                    {% endif %}
+                    {% if about_me.resume_url %}
+                    <p><a href="{{ about_me.resume_url }}" target="_blank" class="text-blue-600 hover:text-blue-800">Download Resume</a></p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Skills by Category -->
+        <h2 class="text-3xl font-bold text-center mb-12">Technical Skills</h2>
+
+        {% for category, skills in skill_categories.items %}
+        <div class="mb-8">
+            <h3 class="text-xl font-semibold mb-4">{{ category }} Skills</h3>
+            <div class="grid md:grid-cols-2 gap-6">
+                {% for skill in skills %}
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h4 class="font-semibold">{{ skill.name }}</h4>
+                    {% if skill.description %}
+                    <p class="text-sm text-gray-600 mt-2">{{ skill.description }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-span-full text-center text-gray-500">
+            <p>Skills data coming soon!</p>
+        </div>
+        {% endfor %}
+
+    </div>
+</section>
+{% endblock %}
