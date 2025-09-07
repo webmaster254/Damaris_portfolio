@@ -65,7 +65,9 @@ class Project(TimeStampedModel):
         ('Cloud', 'Cloud Architecture'),
     )
     title = models.CharField(max_length=200)
-    description = models.TextField()
+    description = models.TextField(
+        help_text="Use '-' at the beginning of a line for bullet points. Example:\n- First item\n- Second item\n- Third item"
+    )
     project_type = models.CharField(max_length=20, choices=PROJECT_TYPES)
     technologies_used = models.ManyToManyField(Skill, blank=True, related_name='projects') 
     github_url = models.URLField(blank=True, null=True)

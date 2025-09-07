@@ -2,25 +2,63 @@
 
 {% block content %}
 <!-- Hero Section -->
-<section class="gradient-bg text-white py-20">
-    <div class="max-w-6xl mx-auto px-4 text-center">
-        {% if about_me %}
-            {% if about_me.photo %}
-            <img src="{{ about_me.photo.url }}" alt="{{ about_me.full_name }}" class="w-32 h-32 rounded-full mx-auto mb-6 object-cover border-4 border-white">
-            {% endif %}
-            <h1 class="text-4xl md:text-6xl font-bold mb-4">Hello, I'm {{ about_me.full_name }}</h1>
-            <h2 class="text-xl md:text-2xl mb-8">{{ about_me.title }}</h2>
-            <p class="text-lg max-w-2xl mx-auto mb-8">{{ about_me.bio_md|truncatewords:30 }}</p>
-            <div class="space-x-4">
-                <a href="{% url 'about' %}" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">Learn More</a>
-                <a href="{% url 'projects' %}" class="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">View Projects</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        @media (max-width: 768px) {
+            .hero-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white pt-32 pb-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="md:flex items-center justify-between hero-content">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                        <h1 class="text-4xl md:text-5xl font-bold mb-4">Hi, I'm <span class="gradient-text">Damaris Chege</span></h1>
+                        <h2 class="text-2xl md:text-3xl font-semibold mb-6">Backend Developer and Solution Architect</h2>
+                        <p class="text-lg text-gray-300 mb-8">I build scalable backend systems and cloud solutions with modern technologies and clean code. Passionate about creating efficient, reliable systems that power amazing user experiences.</p>
+                    <div class="flex space-x-4">
+                        <a href="{% url 'contact' %}" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition">Get In Touch</a>
+                        <a href="{% url 'projects' %}" class="border border-gray-400 hover:border-white text-white px-6 py-3 rounded-lg font-medium transition">View Projects</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative">
+                        {% if about_me and about_me.photo %}
+                            <div class="w-64 h-64 md:w-80 md:h-80 bg-blue-900 rounded-full overflow-hidden border-4 border-blue-500">
+                                <img src="{{ about_me.photo.url }}" alt="{{ about_me.full_name }}" class="w-full h-full object-cover">
+                            </div>
+                        {% else %}
+                            <div class="w-64 h-64 md:w-80 md:h-80 bg-blue-900 rounded-full overflow-hidden border-4 border-blue-500 flex items-center justify-center text-white text-5xl">
+                                DC
+                            </div>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
             </div>
-        {% else %}
-            <h1 class="text-4xl md:text-6xl font-bold mb-4">Backend Developer & AWS Solutions Architect</h1>
-            <p class="text-lg max-w-2xl mx-auto mb-8">Welcome to my portfolio. I build scalable backend systems and cloud architecture solutions.</p>
-        {% endif %}
-    </div>
-</section>
+        </div>
+    </section>
+</body>
+</html>
 
 <!-- Featured Projects Section -->
 <section class="py-16 bg-white">

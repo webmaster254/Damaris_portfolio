@@ -1,77 +1,178 @@
 {% extends "main/base.html" %}
 
 {% block content %}
-<section class="py-16">
-    <div class="max-w-4xl mx-auto px-4">
-        {% if about_me %}
-        <div class="text-center mb-12">
-            {% if about_me.photo %}
-            <img src="{{ about_me.photo.url }}" alt="{{ about_me.full_name }}" class="w-48 h-48 rounded-full mx-auto mb-6 object-cover border-4 border-blue-100">
+    <!-- About Content Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {% if about_me %}
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4 section-title">About Me</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto"></div>
+            </div>
+            
+            <div class="md:flex items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    {% if about_me.photo %}
+                    <div class="relative mb-8 md:hidden">
+                        <div class="w-48 h-48 mx-auto bg-blue-900 rounded-full overflow-hidden border-4 border-blue-500">
+                            <img src="{{ about_me.photo.url }}" alt="{{ about_me.full_name }}" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-800">Who I Am</h3>
+                    <div class="text-gray-600 mb-6 space-y-4">
+                        {{ about_me.bio_md|linebreaks }}
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-4 mt-8">
+                        {% for skill in top_skills %}
+                        <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium">{{ skill.name }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                    
+                <!-- Contact Information -->
+                <div class="md:w-1/2 md:pl-12">
+                    <div class="bg-gray-50 p-8 rounded-xl shadow-sm card-hover">
+                        <h3 class="text-2xl font-semibold mb-6 text-gray-800">Contact Information</h3>
+                        <div class="space-y-4">
+                            {% if about_me.email_public %}
+                            <div class="flex items-center">
+                                <div class="contact-icon p-3 rounded-full mr-4 text-white">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-500 text-sm">Email</p>
+                                    <p class="font-medium text-gray-800">{{ about_me.email_public }}</p>
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            {% if about_me.phone_public %}
+                            <div class="flex items-center">
+                                <div class="contact-icon p-3 rounded-full mr-4 text-white">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-500 text-sm">Phone</p>
+                                    <p class="font-medium text-gray-800">{{ about_me.phone_public }}</p>
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            {% if about_me.location %}
+                            <div class="flex items-center">
+                                <div class="contact-icon p-3 rounded-full mr-4 text-white">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <p class="text-gray-500 text-sm">Location</p>
+                                    <p class="font-medium text-gray-800">{{ about_me.location }}</p>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="flex space-x-4 mt-8 justify-center">
+                            {% if about_me.github_url %}
+                            <a href="{{ about_me.github_url }}" target="_blank" class="social-icon bg-gray-800 text-white p-3 rounded-full hover:bg-gray-700 transition-colors">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            {% endif %}
+                            
+                            {% if about_me.linkedin_url %}
+                            <a href="{{ about_me.linkedin_url }}" target="_blank" class="social-icon bg-blue-700 text-white p-3 rounded-full hover:bg-blue-800 transition-colors">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            {% endif %}
+                            
+                            {% if about_me.twitter_url %}
+                            <a href="{{ about_me.twitter_url }}" target="_blank" class="social-icon bg-blue-500 text-white p-3 rounded-full hover:bg-blue-600 transition-colors">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            {% endif %}
+                            
+                            {% if about_me.resume_url %}
+                            <a href="{{ about_me.resume_url }}" target="_blank" class="social-icon bg-green-600 text-white p-3 rounded-full hover:bg-green-700 transition-colors">
+                                <i class="fas fa-file-alt"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
             {% endif %}
-            <h1 class="text-4xl font-bold mb-4">{{ about_me.full_name }}</h1>
-            <h2 class="text-xl text-gray-600 mb-6">{{ about_me.title }}</h2>
-            <p class="text-lg text-gray-700">{{ about_me.bio_md|linebreaks }}</p>
         </div>
+    </section>
 
-        <div class="grid md:grid-cols-2 gap-8 mb-12">
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-                <h3 class="text-xl font-semibold mb-4">Contact Information</h3>
-                <div class="space-y-2">
-                    {% if about_me.email_public %}
-                    <p><strong>Email:</strong> {{ about_me.email_public }}</p>
-                    {% endif %}
-                    {% if about_me.phone_public %}
-                    <p><strong>Phone:</strong> {{ about_me.phone_public }}</p>
-                    {% endif %}
-                    {% if about_me.location %}
-                    <p><strong>Location:</strong> {{ about_me.location }}</p>
-                    {% endif %}
-                </div>
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4 section-title">Technical Skills</h2>
+                <div class="w-20 h-1 bg-blue-600 mx-auto"></div>
             </div>
 
-            <div class="bg-white p-6 rounded-lg shadow-sm">
-                <h3 class="text-xl font-semibold mb-4">Links</h3>
-                <div class="space-y-2">
-                    {% if about_me.github_url %}
-                    <p><a href="{{ about_me.github_url }}" target="_blank" class="text-blue-600 hover:text-blue-800">GitHub</a></p>
-                    {% endif %}
-                    {% if about_me.linkedin_url %}
-                    <p><a href="{{ about_me.linkedin_url }}" target="_blank" class="text-blue-600 hover:text-blue-800">LinkedIn</a></p>
-                    {% endif %}
-                    {% if about_me.twitter_url %}
-                    <p><a href="{{ about_me.twitter_url }}" target="_blank" class="text-blue-600 hover:text-blue-800">Twitter</a></p>
-                    {% endif %}
-                    {% if about_me.resume_url %}
-                    <p><a href="{{ about_me.resume_url }}" target="_blank" class="text-blue-600 hover:text-blue-800">Download Resume</a></p>
-                    {% endif %}
+            {% for category, skills in skill_categories.items %}
+            <div class="mb-12">
+                <h3 class="text-2xl font-semibold mb-6 text-gray-800 flex items-center">
+                    <div class="contact-icon p-2 rounded-lg mr-3 text-white">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    {{ category }} Skills
+                </h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    {% for skill in skills %}
+                    <div class="bg-white p-6 rounded-xl shadow-sm card-hover">
+                        <div class="flex justify-between items-center mb-2">
+                            <h4 class="font-semibold text-lg text-gray-800">{{ skill.name }}</h4>
+                            {% if skill.proficiency %}
+                            <span class="text-blue-600 font-medium">{{ skill.proficiency }}%</span>
+                            {% endif %}
+                        </div>
+                        {% if skill.proficiency %}
+                        <div class="w-full bg-gray-200 rounded-full h-2.5 mb-3">
+                            <div class="skill-bar bg-blue-600 h-2.5 rounded-full" data-width="{{ skill.proficiency }}"></div>
+                        </div>
+                        {% endif %}
+                        {% if skill.description %}
+                        <p class="text-gray-600 mt-2">{{ skill.description }}</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
                 </div>
             </div>
-        </div>
-        {% endif %}
-
-        <!-- Skills by Category -->
-        <h2 class="text-3xl font-bold text-center mb-12">Technical Skills</h2>
-
-        {% for category, skills in skill_categories.items %}
-        <div class="mb-8">
-            <h3 class="text-xl font-semibold mb-4">{{ category }} Skills</h3>
-            <div class="grid md:grid-cols-2 gap-6">
-                {% for skill in skills %}
-                <div class="bg-white p-6 rounded-lg shadow-sm">
-                    <h4 class="font-semibold">{{ skill.name }}</h4>
-                    {% if skill.description %}
-                    <p class="text-sm text-gray-600 mt-2">{{ skill.description }}</p>
-                    {% endif %}
-                </div>
-                {% endfor %}
+            {% empty %}
+            <div class="text-center text-gray-500 py-12">
+                <p class="text-xl">Skills data coming soon!</p>
             </div>
+            {% endfor %}
         </div>
-        {% empty %}
-        <div class="col-span-full text-center text-gray-500">
-            <p>Skills data coming soon!</p>
-        </div>
-        {% endfor %}
+    </section>
+{% endblock %}
 
-    </div>
-</section>
+{% block extra_js %}
+<script>
+    // Animate skill bars when they come into view
+    document.addEventListener('DOMContentLoaded', function() {
+        const skillElements = document.querySelectorAll('.skill-bar');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const width = entry.target.getAttribute('data-width') + '%';
+                    entry.target.style.width = '0';
+                    setTimeout(() => {
+                        entry.target.style.width = width;
+                    }, 100);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        skillElements.forEach(skill => {
+            observer.observe(skill);
+        });
+    });
+</script>
 {% endblock %}
